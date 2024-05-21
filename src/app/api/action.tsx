@@ -11,19 +11,35 @@ import { generateObject } from "ai";
 import { infoSchema } from "../schema/info";
 import { linkSchema } from "../schema/link"; // Import the new schema
 
+// Add Axios for making HTTP requests
+import axios from 'axios';
+
 export interface ServerMessage {
-  role: "user" | "assistant";
+  role: "user" | "assistant" | "system";
   content: string;
 }
 
+const api = "https://api.example.com/rag";
+
 export interface ClientMessage {
   id: string;
-  role: "user" | "assistant";
+  role: "user" | "assistant" | "system";
   display: ReactNode;
 }
 
 // Define an explicit state variable to hold the conversation history
 let conversationHistory: ServerMessage[] = [];
+
+// Add a function to perform RAG retrieval
+async function retrieveFromRAG(query: string): Promise<string> {
+  try {
+    const response = await axios.post(api, { query });
+    return response.data.retrieved_text; // Adjust based on your API's response format
+  } catch (error) {
+    console.error("Error retrieving from RAG:", error);
+    return "Failed to retrieve information.";
+  }
+}
 
 export async function continueConversation(input: string): Promise<ClientMessage> {
   "use server";
@@ -32,6 +48,10 @@ export async function continueConversation(input: string): Promise<ClientMessage
   const newMessage: ServerMessage = { role: "user", content: input };
   conversationHistory.push(newMessage);
   // console.log("Updated conversation history after user input:", conversationHistory);
+
+  // Retrieve relevant information using RAG
+  const retrievedInfo = await retrieveFromRAG(input);
+  conversationHistory.push({ role: "system", content: retrievedInfo }); // Add retrieved info to conversation history
 
   // Call the OpenAI API to generate the assistant's response
   const result = await streamUI({
