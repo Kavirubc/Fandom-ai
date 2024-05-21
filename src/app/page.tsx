@@ -31,7 +31,7 @@ export default function Home() {
 
   function handleCard(text: string) {
     setInput(text);
-    setShowInfo(false);
+
   }
 
   return (
