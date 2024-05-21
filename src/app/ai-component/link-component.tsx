@@ -8,7 +8,7 @@ export const linkComponent = ({ link }: { link?: link }) => {
     const [showDescription, setshowDescription] = useState(false);
     return (
         <div className="bg-inherit backdrop-blur-md p-4 rounded-md m-4 max-w-prose flex items-center justify-between ">
-            <p className="text-black">{showDescription ? link?.description : link?.title && link?.link}</p>
+            <p className="text-black">{showDescription ? (link?.description && link?.link ): link?.title}</p>
             <Button
                 onClick={() => setshowDescription(true)}
                 disabled={showDescription}
