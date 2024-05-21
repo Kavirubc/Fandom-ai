@@ -7,16 +7,41 @@ import { nanoid } from "nanoid";
 import { Send, User, Bot } from "lucide-react";
 import { Navbar } from "@/components/navbar";
 
+import { useUser } from "@clerk/nextjs";
+
 export default function Home() {
   const [input, setInput] = useState<string>("");
   const [conversation, setConversation] = useUIState();
   const { continueConversation } = useActions();
+
+  const user = useUser();
+
+  const firstName = "Kaviru"
 
   return (
     <>
     <Navbar />
     <div className="min-h-screen bg-white text-black flex flex-col items-center p-6 mt-10">
       <div className="w-full max-w-3xl  flex flex-col space-y-4 p-8 overflow-auto  min-h-screen pb-40">
+          {user.isSignedIn ? (
+            <div>
+              <h1 className="text-3xl font-bold">Welcome back {firstName}</h1>
+              <p className="text-lg">
+                Ask me anything about your favorite fandoms!
+              </p>
+            </div>
+          ) : (
+            <div>
+              <h1 className="text-3xl font-bold">Welcome to Fandom AI</h1>
+              <p className="text-lg">
+                You are not logged in. Please log in to continue.
+              </p>
+              <p className="text-lg">
+                Ask me anything about your favorite fandoms!
+              </p>
+            </div>
+          )}
+
         <div className="flex-grow overflow-auto space-y-4">
           {conversation.map((message: ClientMessage) => (
             <div
