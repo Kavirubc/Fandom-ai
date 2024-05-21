@@ -13,7 +13,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-white text-black flex flex-col items-center p-6">
-      <div className="w-full max-w-3xl  flex flex-col space-y-4 p-8 overflow-auto rounded-lg shadow-lg bg-gray-50 min-h-screen pb-40">
+      <div className="w-full max-w-3xl  flex flex-col space-y-4 p-8 overflow-auto  min-h-screen pb-40">
         <div className="flex-grow overflow-auto space-y-4">
           {conversation.map((message: ClientMessage) => (
             <div
@@ -21,7 +21,7 @@ export default function Home() {
               className={`flex ${message.role === "user" ? "justify-end" : "justify-start"}`}
             >
               <div
-                className={`max-w-xl flex flex-col items-start p-4 rounded-lg text-lg leading-loose ${message.role === "user" ? "bg-violet-100 text-black" : "bg-green-100 text-gray-800"
+                className={`max-w-xl flex flex-col items-start py-2 px-4 rounded-xl text-lg leading-loose ${message.role === "user" ? "bg-violet-100 text-black" : "bg-gray-100 text-gray-800"
                   } shadow-md`}
               >
                 <div className="flex items-center">
@@ -54,7 +54,7 @@ export default function Home() {
             message,
           ]);
         }}
-        className="w-full max-w-2xl flex items-center p-4 rounded-lg shadow-md mt-4 bg-white fixed bottom-0 mb-10"
+        className="w-full max-w-3xl flex items-center p-4 rounded-lg bg-white  mt-4  fixed bottom-0 pb-10"
       >
         <input
           type="text"
@@ -62,15 +62,16 @@ export default function Home() {
           onChange={(event) => {
             setInput(event.target.value);
           }}
-          className="flex-grow p-2 bg-gray-100 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-l-lg text-black"
+          className="flex-grow p-2 bg-gray-100 border border-gray-300 focus:outline-none focus:ring-1 focus:ring-violet-500 rounded-full text-black"
         />
         <button
           type="submit"
-          className="p-2 bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-r-lg flex items-center m-2"
+          className="p-2 ml-2 bg-violet-500 hover:bg-violet-600 focus:outline-none focus:ring-1 focus:ring-violet-500 rounded-full flex items-center"
         >
           <Send className="w-5 h-5 text-white" />
         </button>
       </form>
+
     </div>
   );
 }
