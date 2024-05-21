@@ -4,6 +4,7 @@ import "./globals.css";
 import { AI } from "./api/action";
 import { BackButton } from "@/components/back-button";
 import icon from "@/../public/icon-fn.png"
+import { ClerkProvider, SignInButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs'
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -26,12 +27,14 @@ export default function RootLayout({
       </head>
       <body className={inter.className}>
         <div>
+          <ClerkProvider>
           <AI>
             <div className="mb-4">
               <BackButton />
             </div>
             <div>{children}</div>
           </AI>
+          </ClerkProvider>
         </div>
       </body>
     </html>

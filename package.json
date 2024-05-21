@@ -10,8 +10,10 @@
   },
   "dependencies": {
     "@ai-sdk/openai": "^0.0.4",
+    "@clerk/nextjs": "^5.0.12",
     "@radix-ui/react-label": "^2.0.2",
     "@radix-ui/react-slot": "^1.0.2",
+    "@tabler/icons-react": "^3.4.0",
     "ai": "^3.1.9",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",

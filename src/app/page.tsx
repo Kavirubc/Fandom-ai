@@ -5,6 +5,7 @@ import { ClientMessage } from "./api/action";
 import { useActions, useUIState } from "ai/rsc";
 import { nanoid } from "nanoid";
 import { Send, User, Bot } from "lucide-react";
+import { Navbar } from "@/components/navbar";
 
 export default function Home() {
   const [input, setInput] = useState<string>("");
@@ -12,7 +13,9 @@ export default function Home() {
   const { continueConversation } = useActions();
 
   return (
-    <div className="min-h-screen bg-white text-black flex flex-col items-center p-6">
+    <>
+    <Navbar />
+    <div className="min-h-screen bg-white text-black flex flex-col items-center p-6 mt-10">
       <div className="w-full max-w-3xl  flex flex-col space-y-4 p-8 overflow-auto  min-h-screen pb-40">
         <div className="flex-grow overflow-auto space-y-4">
           {conversation.map((message: ClientMessage) => (
@@ -73,5 +76,6 @@ export default function Home() {
       </form>
 
     </div>
+    </>
   );
 }
