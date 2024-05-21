@@ -5,9 +5,9 @@ import { openai } from "@ai-sdk/openai";
 import { ReactNode } from "react";
 import { z } from "zod";
 import { nanoid } from "nanoid";
-import { JokeComponent } from "./joke-component";
+import { InfoComponent } from "./info-component";
 import { generateObject } from "ai";
-import { jokeSchema } from "./joke";
+import { infoSchema } from "./info";
 
 export interface ServerMessage {
   role: "user" | "assistant";
@@ -42,20 +42,20 @@ export async function continueConversation(
     },
     tools: {
       tellAJoke: {
-        description: "Tell a joke",
+        description: "Tell me info",
         parameters: z.object({
-          location: z.string().describe("the users location"),
+          situation: z.string().describe("the users situation"),
         }),
-        generate: async function* ({ location }) {
+        generate: async function* ({ situation }) {
           yield <div>loading...</div>;
-          const joke = await generateObject({
+          const info = await generateObject({
             model: openai("gpt-3.5-turbo-16k"),
-            schema: jokeSchema,
+            schema: infoSchema,
             prompt:
-              "Generate a joke that incorporates the following location:" +
-              location,
+              "Generate a info that incorporates the following situation:" +
+              situation,
           });
-          return <JokeComponent joke={joke.object} />;
+          return <InfoComponent info={info.object} />;
         },
       },
     },
