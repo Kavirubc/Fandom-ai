@@ -41,10 +41,10 @@ export async function continueConversation(
       return <div>{content}</div>;
     },
     tools: {
-      tellAJoke: {
-        description: "Tell me info",
+      tellInfo: {
+        description: "Tell me a one fun fact about this person",
         parameters: z.object({
-          situation: z.string().describe("the users situation"),
+          situation: z.string().describe("the person"),
         }),
         generate: async function* ({ situation }) {
           yield <div>loading...</div>;
@@ -52,7 +52,7 @@ export async function continueConversation(
             model: openai("gpt-3.5-turbo-16k"),
             schema: infoSchema,
             prompt:
-              "Generate a info that incorporates the following situation:" +
+              "Generate a info that incorporates the following person:" +
               situation,
           });
           return <InfoComponent info={info.object} />;
