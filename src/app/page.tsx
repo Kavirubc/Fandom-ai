@@ -75,8 +75,8 @@ export default function Home() {
                   className={`max-w-xl flex flex-col items-start py-2 px-4 rounded-xl text-base leading-loose ${message.role === "user" ? "bg-gray-100 text-black" : "bg-violet-100 text-gray-800"
                     } shadow-md`}
                 >
-                  <div className="flex items-center">
-                    {message.role !== "user" && <Bot className="w-5 h-5 mr-2 text-violet-800 flex-shrink-0" />}
+                  <div className="flex flex-row items-center">
+                    {message.role !== "user" && <Bot className="w-8 h-8 mr-2 p-1 text-violet-800 flex-shrink-0 border items-center bg-white rounded-full" />}
                     <span className="flex-grow">{message.display}</span>
                   </div>
                 </div>
