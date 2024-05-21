@@ -12,7 +12,7 @@ export const JokeComponent = ({ joke }: { joke?: Joke }) => {
       <Button
         onClick={() => setShowPunchline(true)}
         disabled={showPunchline}
-        // variant="outline"
+        variant="outline"
       >
         Show Punchline!
       </Button>
