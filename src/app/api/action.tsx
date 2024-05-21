@@ -8,7 +8,7 @@ import { nanoid } from "nanoid";
 import { InfoComponent } from "../ai-component/info-component";
 import { generateObject } from "ai";
 import { infoSchema } from "../schema/info";
-
+import { BounceLoader } from "react-spinners"
 export interface ServerMessage {
   role: "user" | "assistant";
   content: string;
@@ -38,21 +38,25 @@ export async function continueConversation(
         ]);
       }
 
+
+
+
       return <div>{content}</div>;
     },
     tools: {
       tellInfo: {
-        description: "Tell me a one fun fact about this person. Keep the word count under 20.",
+        description: "Tell me a fun fact",
         parameters: z.object({
           situation: z.string().describe("the person"),
         }),
         generate: async function* ({ situation }) {
-          yield <div>loading...</div>;
+          yield <div>Loading...</div>;
           const info = await generateObject({
             model: openai("gpt-3.5-turbo-16k"),
             schema: infoSchema,
+
             prompt:
-              "Generate a info that incorporates the following person:" +
+              "Generate a info max word count 10 that incorporates the following person:" +
               situation,
           });
           return <InfoComponent info={info.object} />;

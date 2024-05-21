@@ -12,8 +12,8 @@ export default function Home() {
   const { continueConversation } = useActions();
 
   return (
-    <div className="min-h-screen bg-gray-200 flex flex-col items-center justify-between p-6">
-      <div className="w-full max-w-2xl bg-white rounded-lg shadow-lg p-6 flex flex-col space-y-4 overflow-auto flex-grow">
+    <div className="min-h-screen bg-white text-black flex flex-col items-center p-6">
+      <div className="w-full max-w-3xl  flex flex-col space-y-4 p-8 overflow-auto rounded-lg shadow-lg bg-gray-50 min-h-screen pb-40">
         <div className="flex-grow overflow-auto space-y-4">
           {conversation.map((message: ClientMessage) => (
             <div
@@ -21,12 +21,12 @@ export default function Home() {
               className={`flex ${message.role === "user" ? "justify-end" : "justify-start"}`}
             >
               <div
-                className={`max-w-xs p-3 rounded-lg ${message.role === "user"
-                  ? "bg-black text-white"
-                  : "bg-gray-300 text-gray-900"
-                  } hover:shadow-lg`}
+                className={`max-w-xl p-4 rounded-lg text-lg leading-loose ${message.role === "user"
+                  ? "bg-blue-100 text-black"
+                  : "bg-gray-200 text-gray-800"
+                  } shadow-md`}
               >
-                <span className="block font-semibold">{message.role}</span>
+                <span className="font-medium">{message.role}</span>
                 <span>{message.display}</span>
               </div>
             </div>
@@ -49,7 +49,7 @@ export default function Home() {
             message,
           ]);
         }}
-        className="w-full max-w-2xl flex items-center p-6 bg-white rounded-lg shadow-lg mt-4"
+        className="w-full max-w-2xl flex items-center p-4 rounded-lg shadow-md mt-4 bg-white fixed bottom-0 mb-10"
       >
         <input
           type="text"
@@ -57,13 +57,13 @@ export default function Home() {
           onChange={(event) => {
             setInput(event.target.value);
           }}
-          className="flex-grow p-2 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-black rounded-l-none"
+          className="flex-grow p-2 bg-gray-100 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-l-lg text-black"
         />
         <button
           type="submit"
-          className="p-2 bg-black text-white hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-black rounded-r-none flex items-center"
+          className="p-2 bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-r-lg flex items-center m-2"
         >
-          <Send className="w-5 h-5" />
+          <Send className="w-5 h-5 text-white" />
         </button>
       </form>
     </div>
