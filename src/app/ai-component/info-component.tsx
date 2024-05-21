@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { info } from "./info";
+import { info } from "../schema/info";
 
 export const InfoComponent = ({ info }: { info?: info }) => {
   const [showDescription, setshowDescription] = useState(false);

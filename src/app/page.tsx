@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { ClientMessage } from "./action";
+import { ClientMessage } from "./api/action";
 import { useActions, useUIState } from "ai/rsc";
 import { nanoid } from "nanoid";
 import { Send } from "lucide-react";

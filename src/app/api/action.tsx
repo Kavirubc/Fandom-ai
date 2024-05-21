@@ -5,9 +5,9 @@ import { openai } from "@ai-sdk/openai";
 import { ReactNode } from "react";
 import { z } from "zod";
 import { nanoid } from "nanoid";
-import { InfoComponent } from "./info-component";
+import { InfoComponent } from "../ai-component/info-component";
 import { generateObject } from "ai";
-import { infoSchema } from "./info";
+import { infoSchema } from "../schema/info";
 
 export interface ServerMessage {
   role: "user" | "assistant";
