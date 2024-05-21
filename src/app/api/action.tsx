@@ -22,7 +22,7 @@ export interface ClientMessage {
 
 // Define an explicit state variable to hold the conversation history
 let conversationHistory: ServerMessage[] = [];
-
+  
 export async function continueConversation(input: string): Promise<ClientMessage> {
   "use server";
 
@@ -34,7 +34,7 @@ export async function continueConversation(input: string): Promise<ClientMessage
   // Call the OpenAI API to generate the assistant's response
   const result = await streamUI({
     model: openai("gpt-3.5-turbo-16k"),
-    temperature: 0.2,
+    temperature: 0.5,
     topP: 1,
     messages: conversationHistory,
     text: ({ content, done }) => {
@@ -56,6 +56,8 @@ export async function continueConversation(input: string): Promise<ClientMessage
           yield <div>Loading...</div>;
           const info = await generateObject({
             model: openai("gpt-3.5-turbo-16k"),
+            temperature: 0.5,
+            topP: 1,
             schema: infoSchema,
             prompt: "Generate a fun fact of  max word count 10 that incorporates the following person:" + situation,
           });
