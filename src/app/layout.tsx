@@ -21,19 +21,19 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-       
+
         <link rel="icon" href={icon.src} />
-       
+
       </head>
       <body className={inter.className}>
         <div>
           <ClerkProvider>
-          <AI>
-            <div className="mb-4">
-              <BackButton />
-            </div>
-            <div>{children}</div>
-          </AI>
+            <AI>
+              <div className="mb-4">
+                <BackButton />
+              </div>
+              <div>{children}</div>
+            </AI>
           </ClerkProvider>
         </div>
       </body>
