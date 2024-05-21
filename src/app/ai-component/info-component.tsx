@@ -15,7 +15,7 @@ export const InfoComponent = ({ info }: { info?: info }) => {
         variant="outline"
         className="ml-4 border border-gray-300 text-black bg-white hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 rounded-md"
       >
-        Show Punchline!
+        Show fun-fact!
       </Button>
     </div>
   );
