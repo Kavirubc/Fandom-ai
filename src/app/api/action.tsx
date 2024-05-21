@@ -6,8 +6,10 @@ import { ReactNode } from "react";
 import { z } from "zod";
 import { nanoid } from "nanoid";
 import { InfoComponent } from "../ai-component/info-component";
+import { LinkComponent } from "../ai-component/link-component"; // Import the new component
 import { generateObject } from "ai";
 import { infoSchema } from "../schema/info";
+import { linkSchema } from "../schema/link"; // Import the new schema
 
 export interface ServerMessage {
   role: "user" | "assistant";
@@ -22,7 +24,7 @@ export interface ClientMessage {
 
 // Define an explicit state variable to hold the conversation history
 let conversationHistory: ServerMessage[] = [];
-  
+
 export async function continueConversation(input: string): Promise<ClientMessage> {
   "use server";
 
@@ -59,9 +61,26 @@ export async function continueConversation(input: string): Promise<ClientMessage
             temperature: 0.5,
             topP: 1,
             schema: infoSchema,
-            prompt: "Generate a fun fact of  max word count 10 that incorporates the following person:" + situation,
+            prompt: "Generate a fun fact of max word count 10 that incorporates the following person: " + situation,
           });
           return <InfoComponent info={info.object} />;
+        },
+      },
+      tellLink: { // New tool for generating linkComponent
+        description: "Provide a related link",
+        parameters: z.object({
+          topic: z.string().describe("the topic"),
+        }),
+        generate: async function* ({ topic }) {
+          yield <div>Loading...</div>;
+          const link = await generateObject({
+            model: openai("gpt-3.5-turbo-16k"),
+            temperature: 0.5,
+            topP: 1,
+            schema: linkSchema,
+            prompt: "Generate a link related to the following topic: " + topic,
+          });
+          return <LinkComponent link={link.object} />;
         },
       },
     },
