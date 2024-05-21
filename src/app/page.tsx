@@ -46,7 +46,7 @@ export default function Home() {
                   </div>
                 ) : (
                   <div>
-                    <h1 className="text-3xl font-bold">Welcome to Fandom AI</h1>
+                      <h1 className="text-3xl font-bold">Welcome to <span className=" text-red-500">Fandom</span> <span className="text-violet-500">AI</span></h1>
                     <p className="text-lg mt-4">You are not logged in. Please log in for a personalized experience.</p>
                     <p className="text-lg mt-2">Ask me anything about your favorite fandoms!</p>
                   </div>
