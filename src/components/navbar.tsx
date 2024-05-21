@@ -18,11 +18,11 @@ export const Navbar = () => {
 
     return (
         <div>
-            <nav className=" py-3 bg-white/60 backdrop-blur-sm top-0 z-50 fixed w-full">
+            <nav className=" pt-5 pb-2 bg-white/20 backdrop-blur-md top-0 z-50 fixed w-full xl:px-40">
                 <div className='px-5 md:px-16 flex flex-row justify-between items-center text-sm'>
                     <Link href='/'>
                         <div className='flex flex-row justify-between items-center'>
-                            <Image src={logo} width={34} height={10} alt='logo' />
+                            <Image src={logo} width={28} height={8} alt='logo' />
                         </div>
                     </Link>
                     <div>
