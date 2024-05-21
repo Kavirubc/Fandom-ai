@@ -4,7 +4,7 @@ import { useState } from "react";
 import { ClientMessage } from "./api/action";
 import { useActions, useUIState } from "ai/rsc";
 import { nanoid } from "nanoid";
-import { Send } from "lucide-react";
+import { Send, User, Bot } from "lucide-react";
 
 export default function Home() {
   const [input, setInput] = useState<string>("");
@@ -21,14 +21,19 @@ export default function Home() {
               className={`flex ${message.role === "user" ? "justify-end" : "justify-start"}`}
             >
               <div
-                className={`max-w-xl p-4 rounded-lg text-lg leading-loose ${message.role === "user"
-                  ? "bg-blue-100 text-black"
-                  : "bg-gray-200 text-gray-800"
+                className={`max-w-xl flex flex-col items-start p-4 rounded-lg text-lg leading-loose ${message.role === "user" ? "bg-violet-100 text-black" : "bg-green-100 text-gray-800"
                   } shadow-md`}
               >
-                <span className="font-medium">{message.role}</span>
-                <span>{message.display}</span>
+                <div className="flex items-center">
+                  {message.role === "user" ? (
+                    <User className="w-5 h-5 mr-2 text-green-700 flex-shrink-0" />
+                  ) : (
+                    <Bot className="w-5 h-5 mr-2 text-violet-800 flex-shrink-0" />
+                  )}
+                  <span className="flex-grow">{message.display}</span>
+                </div>
               </div>
+
             </div>
           ))}
         </div>
