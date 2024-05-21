@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { AI } from "./action";
+import { BackButton } from "@/components/back-button";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,7 +18,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <div className="max-w-2xl p-8">
+          <AI>
+            <div className="mb-4">
+              <BackButton />
+            </div>
+            <div>{children}</div>
+          </AI>
+        </div>
+      </body>
     </html>
   );
 }
