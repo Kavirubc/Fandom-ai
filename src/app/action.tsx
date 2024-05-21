@@ -42,7 +42,7 @@ export async function continueConversation(
     },
     tools: {
       tellInfo: {
-        description: "Tell me a one fun fact about this person",
+        description: "Tell me a one fun fact about this person. Keep the word count under 20.",
         parameters: z.object({
           situation: z.string().describe("the person"),
         }),
