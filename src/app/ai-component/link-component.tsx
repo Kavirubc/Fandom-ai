@@ -20,7 +20,7 @@ export const LinkComponent = ({ link }: { link?: link }) => {
                 <div className="flex flex-col items-start">
                  {link?.description}
                  
-                    <button className="flex flex-row gap-2 items-center text-blue-800 border px-4 py-1 bg-white" onClick={handleLink}>
+                    <button className="flex flex-row gap-2 items-center text-blue-800 border px-4 py-1 mt-1 hover:bg-slate-100 transition-colors duration-300 bg-white rounded-xl" onClick={handleLink}>
                         Link <ArrowUpRight size={18} />
                     </button>
                 </div>
@@ -32,7 +32,7 @@ export const LinkComponent = ({ link }: { link?: link }) => {
                 onClick={() => setshowDescription(true)}
                 disabled={showDescription}
                 variant="outline"
-                className={`ml-4 border border-gray-300 text-black bg-white hover:bg-gray-100 focus:ring-2 focus:ring-violet-500 rounded-md ${showDescription ? 'hidden' : ''}`}
+                className={`ml-4 border border-gray-300 text-black bg-white hover:bg-gray-100 focus:ring-2  focus:ring-violet-500 rounded-md ${showDescription ? 'hidden' : ''}`}
             >
                 Show Link!
             </Button>
