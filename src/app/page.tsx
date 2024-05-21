@@ -6,8 +6,6 @@ import { useActions, useUIState } from "ai/rsc";
 import { nanoid } from "nanoid";
 import { Send, User, Bot } from "lucide-react";
 import { Navbar } from "@/components/navbar";
-
-
 import { useUser } from "@clerk/nextjs";
 
 export default function Home() {
@@ -31,6 +29,11 @@ export default function Home() {
     { text: "What's your favorite video game?" },
   ];
 
+  function handleCard(text: string) {
+    setInput(text);
+    setShowInfo(false);
+  }
+
   return (
     <>
       <Navbar />
@@ -46,7 +49,7 @@ export default function Home() {
                   </div>
                 ) : (
                   <div>
-                      <h1 className="text-3xl font-bold">Welcome to <span className=" text-red-500">Fandom</span> <span className="text-violet-500">AI</span></h1>
+                    <h1 className="text-3xl font-bold">Welcome to <span className="text-red-500">Fandom</span> <span className="text-violet-500">AI</span></h1>
                     <p className="text-lg mt-4">You are not logged in. Please log in for a personalized experience.</p>
                     <p className="text-lg mt-2">Ask me anything about your favorite fandoms!</p>
                   </div>
@@ -54,14 +57,13 @@ export default function Home() {
               </div>
               <div className="pt-48 grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-4">
                 {prompts.map((prompt, index) => (
-                  <div
+                  <button
+                    onClick={() => handleCard(prompt.text)}
                     key={index}
-                    className="flex items-center justify-center p-4 bg-white rounded-lg shadow-md border  hover:border-violet-500 transition-colors duration-300"
+                    className="flex items-center justify-center p-4 bg-white rounded-lg shadow-md border hover:border-violet-500 transition-colors duration-300"
                   >
-                    <div className="w-6 h-6 mr-2 text-violet-800" />
-                    {/* <span>{prompt.icon}</span> */}
                     <span>{prompt.text}</span>
-                  </div>
+                  </button>
                 ))}
               </div>
             </>
@@ -103,6 +105,7 @@ export default function Home() {
           <div className="w-full max-w-3xl flex px-4 items-center">
             <input
               type="text"
+              placeholder="Send me a text message!"
               value={input}
               onChange={(event) => {
                 setInput(event.target.value);
