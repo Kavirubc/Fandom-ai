@@ -10,8 +10,10 @@
   },
   "dependencies": {
     "@ai-sdk/openai": "^0.0.4",
+    "@clerk/nextjs": "^5.0.12",
     "@radix-ui/react-label": "^2.0.2",
     "@radix-ui/react-slot": "^1.0.2",
+    "@tabler/icons-react": "^3.4.0",
     "ai": "^3.1.9",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
@@ -20,6 +22,7 @@
     "next": "~14.2.3",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-spinners": "^0.13.8",
     "server-only": "^0.0.1",
     "tailwind-merge": "^2.3.0",
     "tailwindcss-animate": "^1.0.7",
