@@ -62,7 +62,6 @@ export default function Chat() {
     { text: "What's your favorite memory from a concert tour?" },
   ];
 
-
   function handleCard(text: string) {
     handleInputChange({ target: { value: text } } as React.ChangeEvent<HTMLInputElement>);
   }
@@ -84,7 +83,6 @@ export default function Chat() {
             </SignInButton>
           </div>
         </div>
-
       </>
     );
   }
@@ -107,7 +105,6 @@ export default function Chat() {
                 <h1 className="text-3xl font-bold">Hey {firstName}!</h1>
                 <p className="text-lg mt-4">Welcome back, superstar! 🌟 How's everything going? Ready to dive into some Swiftie magic?</p>
               </div>
-
               <div className="pt-48 grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-4">
                 {prompts.map((prompt, index) => (
                   <button
