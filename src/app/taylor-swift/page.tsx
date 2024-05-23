@@ -4,6 +4,7 @@ import { Message, useAssistant as useAssistant } from 'ai/react';
 import { useEffect, useRef, useState } from 'react';
 import { Send, XCircle, Bot } from 'lucide-react';
 import { Navbar } from '@/components/navbar';
+import { useUser } from '@clerk/nextjs';
 
 const roleToColorMap: Record<Message['role'], string> = {
   system: 'red',
@@ -28,6 +29,10 @@ export default function Chat() {
   const inputRef = useRef<HTMLInputElement>(null);
   const [isMessageSent, setIsMessageSent] = useState(false);
 
+  const { user, isLoaded, isSignedIn } = useUser();
+  const firstName: string = user?.firstName || "";
+  const [showInfo, setShowInfo] = useState(true);
+
   useEffect(() => {
     if (status === 'awaiting_message') {
       inputRef.current?.focus();
@@ -41,6 +46,7 @@ export default function Chat() {
   };
 
   const handleSubmitButton = () => {
+    setShowInfo(false);
     setIsMessageSent(true);
   };
 
@@ -49,78 +55,124 @@ export default function Chat() {
     stop();
   };
 
+  const prompts = [
+    { text: "Ask me anything about movies!" },
+    { text: "Tell me your favorite movie!" },
+    { text: "Recommend me a song!" },
+    { text: "What's your favorite video game?" },
+  ];
+
+  function handleCard(text: string) {
+    handleInputChange({ target: { value: text } } as React.ChangeEvent<HTMLInputElement>);
+  }
+
+  if (!isLoaded) {
+    return <div>Loading...</div>;
+  }
+
+  if (!isSignedIn) {
+    return (
+      <>
+        <Navbar />
+        <div className="min-h-screen flex flex-col w-full max-w-3xl p-6 mx-auto mt-10">
+          <div className="text-center">
+            <h1 className="text-3xl font-bold">Welcome to <span className="text-red-500">Fandom</span> <span className="text-violet-500">AI</span></h1>
+            <p className="text-lg mt-4">You are not logged in. Please log in to use the application.</p>
+          </div>
+        </div>
+      </>
+    );
+  }
+
   return (
     <>
-    <Navbar />
-    <div className="min-h-screen flex flex-col w-full max-w-3xl p-6 mx-auto mt-10">
-      <div className="w-full max-w-3xl flex flex-col space-y-4 p-8 overflow-auto min-h-screen pb-40">
-        {error != null && (
-          <div className="relative px-6 py-4 text-white bg-red-500 rounded-lg">
-            <span className="block sm:inline">
-              Error: {(error as any).toString()}
-            </span>
-          </div>
-        )}
-
-        <div className="flex-grow overflow-auto space-y-4">
-          {messages.map((m: Message) => (
-            <div key={m.id} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-              <div
-                className={`max-w-xl flex flex-col items-start py-2 px-4 rounded-xl text-base leading-loose ${m.role === 'user' ? 'bg-gray-100 text-black' : 'bg-violet-100 text-gray-800'} shadow-md`}
-              >
-                <div className="flex flex-row items-center">
-                  {m.role !== 'user' && <Bot className="w-8 h-8 mr-2 p-1 text-violet-800 flex-shrink-0 border items-center bg-white rounded-full" />}
-                  <span className="flex-grow">{m.content}</span>
-                </div>
-                {m.role === 'data' && (
-                  <>
-                    <span>{(m.data as any).description}</span>
-                    <pre className="bg-gray-200 p-2 rounded-lg">
-                      {JSON.stringify(m.data, null, 2)}
-                    </pre>
-                  </>
-                )}
-              </div>
+      <Navbar />
+      <div className="min-h-screen flex flex-col w-full max-w-3xl p-6 mx-auto mt-10">
+        <div className="w-full max-w-3xl flex flex-col space-y-4 p-8 overflow-auto min-h-screen pb-40">
+          {error != null && (
+            <div className="relative px-6 py-4 text-white bg-red-500 rounded-lg">
+              <span className="block sm:inline">
+                Error: {(error as any).toString()}
+              </span>
             </div>
-          ))}
-
-          {status === 'in_progress' && (
-            <div className="w-full h-8 max-w-md p-2 mb-8 bg-gray-300 rounded-lg dark:bg-gray-600 animate-pulse" />
           )}
+          {showInfo && (
+            <>
+              <div>
+                <h1 className="text-3xl font-bold">Welcome back {firstName}!</h1>
+                <p className="text-lg mt-4">Ask me anything about your favorite fandoms!</p>
+              </div>
+              <div className="pt-48 grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-4">
+                {prompts.map((prompt, index) => (
+                  <button
+                    onClick={() => handleCard(prompt.text)}
+                    key={index}
+                    className="flex items-center justify-center p-4 bg-white rounded-lg shadow-md border hover:border-violet-500 transition-colors duration-300"
+                  >
+                    <span>{prompt.text}</span>
+                  </button>
+                ))}
+              </div>
+            </>
+          )}
+          <div className="flex-grow overflow-auto space-y-4">
+            {messages.map((m: Message) => (
+              <div key={m.id} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+                <div
+                  className={`max-w-xl flex flex-col items-start py-2 px-4 rounded-xl text-base leading-loose ${m.role === 'user' ? 'bg-gray-100 text-black' : 'bg-violet-100 text-gray-800'} shadow-md`}
+                >
+                  <div className="flex flex-row items-center">
+                    {m.role !== 'user' && <Bot className="w-8 h-8 mr-2 p-1 text-violet-800 flex-shrink-0 border items-center bg-white rounded-full" />}
+                    <span className="flex-grow">{m.content}</span>
+                  </div>
+                  {m.role === 'data' && (
+                    <>
+                      <span>{(m.data as any).description}</span>
+                      <pre className="bg-gray-200 p-2 rounded-lg">
+                        {JSON.stringify(m.data, null, 2)}
+                      </pre>
+                    </>
+                  )}
+                </div>
+              </div>
+            ))}
+            {status === 'in_progress' && (
+              <div className="w-full h-8 max-w-md p-2 mb-8 bg-gray-300 rounded-lg dark:bg-gray-600 animate-pulse" />
+            )}
+          </div>
         </div>
+        <form onSubmit={handleSubmit} className="w-full max-w-3xl flex flex-col items-center p-4 bg-white mt-4 fixed bottom-0 pb-10">
+          <div className="w-full flex px-4 items-center">
+            <input
+              ref={inputRef}
+              disabled={status !== 'awaiting_message'}
+              className="flex-grow px-4 py-2 bg-gray-100 border border-gray-300 focus:outline-none focus:ring-1 focus:ring-violet-500 rounded-full text-black"
+              value={input}
+              placeholder="Send me a text message!"
+              onChange={handleInputChange}
+            />
+            {isMessageSent ? (
+              <button
+                className="p-2 ml-2 bg-red-500 hover:bg-red-600 focus:outline-none focus:ring-1 focus:ring-red-500 rounded-full flex content-center justify-center items-center"
+                onClick={handleStop}
+              >
+                <XCircle className="w-5 h-5 text-white" />
+              </button>
+            ) : (
+              <button
+                onClick={handleSubmitButton}
+                type="submit"
+                className="p-2 ml-2 bg-violet-500 hover:bg-violet-600 focus:outline-none focus:ring-1 focus:ring-violet-500 rounded-full flex content-center justify-center items-center"
+              >
+                <Send className="w-5 h-5 text-white" />
+              </button>
+            )}
+          </div>
+          <p className="text-xs mt-2 text-slate-400 hover:text-slate-700">
+            <sup>*</sup>Please do not share any private information with the chatbot.
+          </p>
+        </form>
       </div>
-      <form onSubmit={handleSubmit} className="w-full max-w-3xl flex flex-col items-center p-4 bg-white mt-4 fixed bottom-0 pb-10">
-        <div className="w-full flex px-4 items-center">
-          <input
-            ref={inputRef}
-            disabled={status !== 'awaiting_message'}
-            className="flex-grow px-4 py-2 bg-gray-100 border border-gray-300 focus:outline-none focus:ring-1 focus:ring-violet-500 rounded-full text-black"
-            value={input}
-            placeholder="What is the temperature in the living room?"
-            onChange={handleInputChange}
-          />
-          {isMessageSent ? (
-            <button
-              className="p-2 ml-2 bg-red-500 hover:bg-red-600 focus:outline-none focus:ring-1 focus:ring-red-500 rounded-full flex content-center justify-center items-center"
-              onClick={handleStop}
-            >
-              <XCircle className="w-5 h-5 text-white" />
-            </button>
-          ) : (
-            <button
-              onClick={handleSubmitButton}
-              type="submit"
-              className="p-2 ml-2 bg-violet-500 hover:bg-violet-600 focus:outline-none focus:ring-1 focus:ring-violet-500 rounded-full flex content-center justify-center items-center"
-            >
-              <Send className="w-5 h-5 text-white" />
-            </button>
-          )}
-        </div>
-        <p className="text-xs mt-2 text-slate-400 hover:text-slate-700">
-          <sup>*</sup>Please do not share any private information with the chatbot.
-        </p>
-      </form>
-    </div>
     </>
   );
 }
