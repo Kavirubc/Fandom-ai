@@ -77,7 +77,7 @@ export default function Chat() {
         <div className="min-h-screen flex flex-col w-full max-w-3xl p-6 mx-auto mt-10">
           <div className="text-center">
             <h1 className="text-3xl font-bold">Welcome to <span className="text-red-500">Fandom</span> <span className="text-violet-500">AI</span></h1>
-            <p className="text-lg mt-4">Hey there, superfan! You're just a login away from diving into the ultimate Taylor Swift experience. Don't be a stranger!</p>
+            <p className="text-lg mt-4">Hey there, superfan! You are just a login away from diving into the ultimate Taylor Swift experience. Don&apos;t be a stranger!</p>
             <SignInButton mode="modal">
               <button className="mt-4 px-4 py-2 bg-violet-500 hover:bg-violet-600 text-white rounded-lg">Sign in and join the fun!</button>
             </SignInButton>
@@ -103,7 +103,7 @@ export default function Chat() {
             <>
               <div>
                 <h1 className="text-3xl font-bold">Hey {firstName}!</h1>
-                <p className="text-lg mt-4">Welcome back, superstar! 🌟 How's everything going? Ready to dive into some Swiftie magic?</p>
+                <p className="text-lg mt-4">Welcome back, superstar! 🌟 How&apos;s everything going? Ready to dive into some Swiftie magic?</p>
               </div>
               <div className="pt-48 grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-4">
                 {prompts.map((prompt, index) => (
