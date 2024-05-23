@@ -5,8 +5,10 @@ import { ClientMessage } from "./api/action";
 import { useActions, useUIState } from "ai/rsc";
 import { nanoid } from "nanoid";
 import { Send, User, Bot } from "lucide-react";
+import { IconArrowUpRight } from "@tabler/icons-react";
 import { Navbar } from "@/components/navbar";
 import { useUser } from "@clerk/nextjs";
+import Link from "next/link";
 
 export default function Home() {
   const [input, setInput] = useState<string>("");
@@ -23,11 +25,12 @@ export default function Home() {
   }
 
   const prompts = [
-    { text: "Ask me anything about movies!" },
-    { text: "Tell me your favorite movie!" },
-    { text: "Recommend me a song!" },
-    { text: "What's your favorite video game?" },
-  ];
+    { text: "What's your favorite song you've written?" },
+    { text: "Do you have any cat stories to share?" },
+    { text: "Can you recommend a movie that you love?" },
+    { text: "What's your favorite memory from a concert tour?" },
+];
+
 
   function handleCard(text: string) {
     setInput(text);
@@ -46,6 +49,7 @@ export default function Home() {
                   <div>
                     <h1 className="text-3xl font-bold">Welcome back {firstName}!</h1>
                     <p className="text-lg mt-4">Ask me anything about your favorite fandoms!</p>
+                    <p className="flex flex-row text-base mt-4">Try our newest addition - <Link className="flex flex-row gap-x-1 underline" href="/taylor-swift"> Taylor Swift <IconArrowUpRight height={18} /></Link></p>
                   </div>
                 ) : (
                   <div>

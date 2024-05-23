@@ -56,11 +56,12 @@ export default function Chat() {
   };
 
   const prompts = [
-    { text: "Ask me anything about movies!" },
-    { text: "Tell me your favorite movie!" },
-    { text: "Recommend me a song!" },
-    { text: "What's your favorite video game?" },
+    { text: "What's your favorite song you've written?" },
+    { text: "Do you have any cat stories to share?" },
+    { text: "Can you recommend a movie that you love?" },
+    { text: "What's your favorite memory from a concert tour?" },
   ];
+
 
   function handleCard(text: string) {
     handleInputChange({ target: { value: text } } as React.ChangeEvent<HTMLInputElement>);
@@ -77,13 +78,13 @@ export default function Chat() {
         <div className="min-h-screen flex flex-col w-full max-w-3xl p-6 mx-auto mt-10">
           <div className="text-center">
             <h1 className="text-3xl font-bold">Welcome to <span className="text-red-500">Fandom</span> <span className="text-violet-500">AI</span></h1>
-            <p className="text-lg mt-4">You are not logged in. Please log in to use the application.</p>
+            <p className="text-lg mt-4">Hey there, superfan! You're just a login away from diving into the ultimate Taylor Swift experience. Don't be a stranger!</p>
             <SignInButton mode="modal">
-              <button className="mt-4 px-4 py-2 bg-violet-500 hover:bg-violet-600 text-white rounded-lg">Sign in</button>
+              <button className="mt-4 px-4 py-2 bg-violet-500 hover:bg-violet-600 text-white rounded-lg">Sign in and join the fun!</button>
             </SignInButton>
           </div>
-
         </div>
+
       </>
     );
   }
@@ -104,8 +105,9 @@ export default function Chat() {
             <>
               <div>
                 <h1 className="text-3xl font-bold">Hey {firstName}!</h1>
-                <p className="text-lg mt-4">How are you doing!</p>
+                <p className="text-lg mt-4">Welcome back, superstar! 🌟 How's everything going? Ready to dive into some Swiftie magic?</p>
               </div>
+
               <div className="pt-48 grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-4">
                 {prompts.map((prompt, index) => (
                   <button
