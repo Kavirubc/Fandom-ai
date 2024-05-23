@@ -2,7 +2,7 @@
 
 import { Message, useAssistant as useAssistant } from 'ai/react';
 import { useEffect, useRef, useState } from 'react';
-import { Send, XCircle } from 'lucide-react';
+import { Send, XCircle, Bot } from 'lucide-react';
 
 const roleToColorMap: Record<Message['role'], string> = {
   system: 'red',
@@ -41,12 +41,12 @@ export default function Chat() {
 
   const handleSubmitButton = () => {
     setIsMessageSent(true);
-  }
+  };
 
   const handleStop = () => {
     setIsMessageSent(false);
     stop();
-  }
+  };
 
   return (
     <div className="min-h-screen flex flex-col w-full max-w-3xl p-6 mx-auto mt-10">
@@ -60,24 +60,23 @@ export default function Chat() {
 
       <div className="flex-grow overflow-auto space-y-4">
         {messages.map((m: Message) => (
-          <div
-            key={m.id}
-            className="whitespace-pre-wrap"
-            style={{ color: roleToColorMap[m.role] }}
-          >
-            <strong>{`${m.role}: `}</strong>
-            {m.role !== 'data' && m.content}
-            {m.role === 'data' && (
-              <>
-                {(m.data as any).description}
-                <br />
-                <pre className="bg-gray-200 p-2 rounded-lg">
-                  {JSON.stringify(m.data, null, 2)}
-                </pre>
-              </>
-            )}
-            <br />
-            <br />
+          <div key={m.id} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+            <div
+              className={`max-w-xl flex flex-col items-start py-2 px-4 rounded-xl text-base leading-loose ${m.role === 'user' ? 'bg-gray-100 text-black' : 'bg-violet-100 text-gray-800'} shadow-md`}
+            >
+              <div className="flex flex-row items-center">
+                {m.role !== 'user' && <Bot className="w-8 h-8 mr-2 p-1 text-violet-800 flex-shrink-0 border items-center bg-white rounded-full" />}
+                <span className="flex-grow">{m.content}</span>
+              </div>
+              {m.role === 'data' && (
+                <>
+                  <span>{(m.data as any).description}</span>
+                  <pre className="bg-gray-200 p-2 rounded-lg">
+                    {JSON.stringify(m.data, null, 2)}
+                  </pre>
+                </>
+              )}
+            </div>
           </div>
         ))}
 
@@ -112,14 +111,11 @@ export default function Chat() {
               <Send className="w-5 h-5 text-white" />
             </button>
           )}
-
         </div>
         <p className="text-xs mt-2 text-slate-400 hover:text-slate-700">
           <sup>*</sup>Please do not share any private information with the chatbot.
         </p>
       </form>
-
-
     </div>
   );
 }
