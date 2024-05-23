@@ -50,41 +50,42 @@ export default function Chat() {
 
   return (
     <div className="min-h-screen flex flex-col w-full max-w-3xl p-6 mx-auto mt-10">
-      {error != null && (
-        <div className="relative px-6 py-4 text-white bg-red-500 rounded-lg">
-          <span className="block sm:inline">
-            Error: {(error as any).toString()}
-          </span>
-        </div>
-      )}
-
-      <div className="flex-grow overflow-auto space-y-4">
-        {messages.map((m: Message) => (
-          <div key={m.id} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-            <div
-              className={`max-w-xl flex flex-col items-start py-2 px-4 rounded-xl text-base leading-loose ${m.role === 'user' ? 'bg-gray-100 text-black' : 'bg-violet-100 text-gray-800'} shadow-md`}
-            >
-              <div className="flex flex-row items-center">
-                {m.role !== 'user' && <Bot className="w-8 h-8 mr-2 p-1 text-violet-800 flex-shrink-0 border items-center bg-white rounded-full" />}
-                <span className="flex-grow">{m.content}</span>
-              </div>
-              {m.role === 'data' && (
-                <>
-                  <span>{(m.data as any).description}</span>
-                  <pre className="bg-gray-200 p-2 rounded-lg">
-                    {JSON.stringify(m.data, null, 2)}
-                  </pre>
-                </>
-              )}
-            </div>
+      <div className="w-full max-w-3xl flex flex-col space-y-4 p-8 overflow-auto min-h-screen pb-40">
+        {error != null && (
+          <div className="relative px-6 py-4 text-white bg-red-500 rounded-lg">
+            <span className="block sm:inline">
+              Error: {(error as any).toString()}
+            </span>
           </div>
-        ))}
-
-        {status === 'in_progress' && (
-          <div className="w-full h-8 max-w-md p-2 mb-8 bg-gray-300 rounded-lg dark:bg-gray-600 animate-pulse" />
         )}
-      </div>
 
+        <div className="flex-grow overflow-auto space-y-4">
+          {messages.map((m: Message) => (
+            <div key={m.id} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+              <div
+                className={`max-w-xl flex flex-col items-start py-2 px-4 rounded-xl text-base leading-loose ${m.role === 'user' ? 'bg-gray-100 text-black' : 'bg-violet-100 text-gray-800'} shadow-md`}
+              >
+                <div className="flex flex-row items-center">
+                  {m.role !== 'user' && <Bot className="w-8 h-8 mr-2 p-1 text-violet-800 flex-shrink-0 border items-center bg-white rounded-full" />}
+                  <span className="flex-grow">{m.content}</span>
+                </div>
+                {m.role === 'data' && (
+                  <>
+                    <span>{(m.data as any).description}</span>
+                    <pre className="bg-gray-200 p-2 rounded-lg">
+                      {JSON.stringify(m.data, null, 2)}
+                    </pre>
+                  </>
+                )}
+              </div>
+            </div>
+          ))}
+
+          {status === 'in_progress' && (
+            <div className="w-full h-8 max-w-md p-2 mb-8 bg-gray-300 rounded-lg dark:bg-gray-600 animate-pulse" />
+          )}
+        </div>
+      </div>
       <form onSubmit={handleSubmit} className="w-full max-w-3xl flex flex-col items-center p-4 bg-white mt-4 fixed bottom-0 pb-10">
         <div className="w-full flex px-4 items-center">
           <input
