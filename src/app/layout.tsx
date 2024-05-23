@@ -29,9 +29,7 @@ export default function RootLayout({
         <div>
           <ClerkProvider>
             <AI>
-              <div className="mb-4">
-                <BackButton />
-              </div>
+              
               <div>{children}</div>
             </AI>
           </ClerkProvider>
