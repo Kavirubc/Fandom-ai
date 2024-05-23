@@ -3,6 +3,7 @@
 import { Message, useAssistant as useAssistant } from 'ai/react';
 import { useEffect, useRef, useState } from 'react';
 import { Send, XCircle, Bot } from 'lucide-react';
+import { Navbar } from '@/components/navbar';
 
 const roleToColorMap: Record<Message['role'], string> = {
   system: 'red',
@@ -49,6 +50,8 @@ export default function Chat() {
   };
 
   return (
+    <>
+    <Navbar />
     <div className="min-h-screen flex flex-col w-full max-w-3xl p-6 mx-auto mt-10">
       <div className="w-full max-w-3xl flex flex-col space-y-4 p-8 overflow-auto min-h-screen pb-40">
         {error != null && (
@@ -118,5 +121,6 @@ export default function Chat() {
         </p>
       </form>
     </div>
+    </>
   );
 }
